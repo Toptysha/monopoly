@@ -1,0 +1,112 @@
+{
+  "players": [
+    {
+      "id": "rw",
+      "isCurrentHero": true,
+      "name": "Ron Weasley",
+      "position": 9,
+      "color": "#dc8b18",
+      "side": true,
+      "budget": 1500,
+      "ownerOf": [],
+      "inPrison": false,
+      "rollDice": true
+    },
+    {
+      "id": "pp",
+      "isCurrentHero": false,
+      "name": "Peter Pettigrew",
+      "position": 0,
+      "color": "#164310",
+      "side": false,
+      "budget": 1500,
+      "ownerOf": [],
+      "inPrison": false,
+      "rollDice": false
+    },
+    {
+      "id": "hg",
+      "isCurrentHero": false,
+      "name": "Hermione Granger",
+      "position": 0,
+      "color": "#e9ec12",
+      "side": true,
+      "budget": 1500,
+      "ownerOf": [],
+      "inPrison": false,
+      "rollDice": false
+    }
+  ],
+  "owners": [
+    {
+      "1": "none",
+      "3": "none",
+      "id": "brownLine",
+      "brownLineOwner": "none"
+    },
+    {
+      "37": "none",
+      "39": "none",
+      "id": "darkblueLine",
+      "darkblueLineOwner": "none"
+    },
+    {
+      "6": "none",
+      "8": "none",
+      "9": "none",
+      "id": "blueLine",
+      "blueLineOwner": "none"
+    },
+    {
+      "id": "allies",
+      "Professor Snape": "none",
+      "Neville Longbottom": "none",
+      "Draco Malfoy": "none",
+      "Luna Lovegood": "none",
+      "goodAlliesOwner": "none",
+      "evilAlliesOwner": "none"
+    },
+    {
+      "id": "deathlyHallows",
+      "Cloak of Invisibility": "none",
+      "Resurrection Stone": "none",
+      "Elder Wand": "none",
+      "deathlyHallowsOwner": "none"
+    },
+    {
+      "11": "none",
+      "13": "none",
+      "14": "none",
+      "id": "purpleLine",
+      "purpleLineOwner": "none"
+    },
+    {
+      "16": "none",
+      "18": "none",
+      "19": "none",
+      "id": "orangeLine",
+      "orangeLineOwner": "none"
+    },
+    {
+      "21": "none",
+      "23": "none",
+      "24": "none",
+      "id": "redLine",
+      "redLineOwner": "none"
+    },
+    {
+      "26": "none",
+      "27": "none",
+      "29": "none",
+      "id": "yellowLine",
+      "yellowLineOwner": "none"
+    },
+    {
+      "31": "none",
+      "32": "none",
+      "34": "none",
+      "id": "greenLine",
+      "greenLineOwner": "none"
+    }
+  ]
+}

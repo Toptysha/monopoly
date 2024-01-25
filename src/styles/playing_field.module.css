@@ -1,0 +1,213 @@
+
+
+.playingField {
+    width: 960px;
+    height: 960px;
+    margin: auto;
+    margin-top: 2px;
+    position: relative;
+}
+
+.topLine, .bottomLine {
+    width: 100%;
+    height: 120px;
+    display: flex;
+}
+
+.start, .justVisiting, .freeParking, .toTheJail {
+    width: 120px;
+    height: auto;
+    background: #cee6d0;
+    border: 1px solid black;
+}
+
+.start, .toTheJail {
+    border-right: none;
+}
+
+.topLineElem, .bottomLineElem {
+    width: 80px;
+    height: auto;
+    background: #cee6d0;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    /* transition: 2s; */
+}
+
+.middleBlock {
+    width: 960px;
+    height: 720px;
+    display: flex;
+}
+
+.leftLine {
+    width: 121px;
+    height: 100%;
+}
+
+.rightLine {
+    width: 120px;
+    height: 100%;
+}
+
+.leftLineElem, .rightLineElem{
+    width: auto;
+    height: 80px;
+    background: #cee6d0;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.middleSquare {
+    width: 720px;
+    height: 100%;
+    /* background: #cee6d0; */
+    /* opacity: 0; */
+}
+
+
+
+.visiting {
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* background: red; */
+    text-align: center;
+    font-size: 18px;
+    padding-top: 6px;
+}
+
+.visiting h2, .visiting h3{
+    /* background: #1fb25a; */
+    width: 100%;
+    display: block;
+    margin-bottom: 4px;
+    /* margin-top: 6px; */
+    /* text-align: center; */
+}
+
+.forCentering {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 21px;
+}
+
+
+
+.justVisiting {
+    position: relative;
+}
+
+/* #shackles { (для тега <img>)
+    position: absolute;
+    left: 0;
+    top: 55px;
+    rotate: 235deg;
+    width: 70px;
+} */
+
+.bottomTriangle {
+    position: absolute;
+    top: 0;
+    border: 59px solid transparent; 
+    border-bottom: 59px solid #b8d8bb; 
+    border-left: 59px solid #b8d8bb;
+}
+
+#shacklesDiv {
+    /* background: red; */
+    position: absolute;
+    left: -10px;
+    top: 45px;
+    width: 70px;
+    z-index: 10;
+}
+
+#shackles {
+    rotate: 235deg;
+    width: 90px;
+    height: 70px;
+}
+
+/* colors */
+
+#elem0, #elem10, #elem20, #elem30 {
+    background: #cee6d0;
+}
+
+#elem1, #elem3 {
+    background: #965539; 
+}
+
+#elem6, #elem8, #elem9 {
+    background: #acdffc; 
+}
+
+#elem11, #elem13, #elem14 {
+    background: #d93a97; 
+}
+
+#elem16, #elem18, #elem19 {
+    background: #f7941d; 
+}
+
+#elem21, #elem23, #elem24 {
+    background: #ed1b24; 
+}
+
+#elem26, #elem27, #elem29 {
+    background: #fdf100; 
+}
+
+#elem31, #elem32, #elem34 {
+    background: #1fb25a; 
+}
+
+#elem37, #elem39 {
+    background: #0072bb; 
+}
+
+#elem2, #elem17, #elem33 { /* Light Magic */
+    background: #75d369; 
+}
+
+#elem7, #elem22, #elem36 { /* Dark Magic */
+    background: #ac7373; 
+}
+
+#elem5, #elem15, #elem25, #elem35 { /* Allies */
+    background: #8ee6d0; 
+}
+
+#elem4, #elem38 { /* Fines */
+    background: #f7a782; 
+}
+
+#elem12, #elem28{ /* Deathly Hallows */
+    background: #bc7ef7; 
+}
+
+
+
+
+
+
+.chipContainer1, .chipContainer2 {
+    /* background: red; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4px;
+}
+
+.chip {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin: 5px;
+}

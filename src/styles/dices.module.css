@@ -1,0 +1,32 @@
+.dicesBlock {
+    width: 200px;
+    height: 200px;
+    margin-top: 200px;
+    margin-left: 260px;
+    font-size: 40px;
+    /* visibility: hidden; */
+}
+
+.dice0 {
+    background-color: yellow;
+    width: 75px;
+    height: 75px;
+    border: 2px solid black;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 75px;
+    text-align: center;
+}
+
+.dice1 {
+    background-color: yellow;
+    width: 75px;
+    height: 75px;
+    border: 2px solid black;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-top: 50px;
+    text-align: center;
+    line-height: 75px;
+    text-align: center;
+}
