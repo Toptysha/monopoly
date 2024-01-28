@@ -2,7 +2,11 @@ import { Player } from "@/types";
 import { ownersEndpoint, playersEndpoint } from "./db-endpoints";
 import { Dispatch, SetStateAction } from "react";
 
-export default function DbInitHeroesAndOwnersState(setHeroesState: Dispatch<SetStateAction<Player[]>>, setOwnersState: Dispatch<SetStateAction<any[]>>, setDbFieldFlag: Dispatch<SetStateAction<boolean>>) {
+export default function DbInitHeroesAndOwnersState(
+    setHeroesState: Dispatch<SetStateAction<Player[]>>, 
+    setOwnersState: Dispatch<SetStateAction<any[]>>, 
+    setDbUpdatePositionFlag: Dispatch<SetStateAction<boolean>>
+) {
 
     fetch(`${playersEndpoint}`)
         .then((rawResponse) => rawResponse.json())
@@ -15,6 +19,6 @@ export default function DbInitHeroesAndOwnersState(setHeroesState: Dispatch<SetS
             .then((response) => {
                 setOwnersState(response)
             })
-            .finally(() => setDbFieldFlag(true))
+            .finally(() => setDbUpdatePositionFlag(true))
         )
 }

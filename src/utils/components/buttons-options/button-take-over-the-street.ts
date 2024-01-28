@@ -1,36 +1,76 @@
 import { MainButton, Player } from "@/types"
-import { OWNERS } from "@/utils/local-storage/local-storage-keys"
 import { Dispatch, SetStateAction } from "react"
-import NextCurrentHero from "../next-current-hero"
+import { CurrentHeroIndex } from "../current-hero"
+import { cards } from "@/start-info"
 
-export default function ButtonTakeOverTheStreet(currentHero: Player, {firstMainButton, setFirstMainButton, secondMainButton, setSecondMainButton}: {
-    firstMainButton: MainButton,
-    setFirstMainButton: Dispatch<SetStateAction<MainButton>>,
-    secondMainButton: MainButton, 
-    setSecondMainButton: Dispatch<SetStateAction<MainButton>>,
-    }) 
-{
+export default function ButtonTakeOverTheStreet(
+    {heroesState, setHeroesState}: {heroesState: Player[], setHeroesState: Dispatch<SetStateAction<Player[]>>},
+    {ownersState, setOwnersState}: {ownersState: any[], setOwnersState: Dispatch<SetStateAction<any[]>>},
+    {firstMainButton, setFirstMainButton}: {firstMainButton: MainButton, setFirstMainButton: Dispatch<SetStateAction<MainButton>>}, 
+    {secondMainButton, setSecondMainButton}: {secondMainButton: MainButton, setSecondMainButton: Dispatch<SetStateAction<MainButton>>},
+    {dbUpdateHerosFlag, setDbUpdateHerosFlag}: {dbUpdateHerosFlag: boolean, setDbUpdateHerosFlag: Dispatch<SetStateAction<boolean>>},
+    {nextCurrentHeroFlag, setNextCurrentHeroFlag}: {nextCurrentHeroFlag: boolean, setNextCurrentHeroFlag: Dispatch<SetStateAction<boolean>>},
+    {courseOptionsFlag, setCourseOptionsFlag}: {courseOptionsFlag: boolean, setCourseOptionsFlag: Dispatch<SetStateAction<boolean>>},
+    {dbUpdateOwnersFlag, setDbUpdateOwnersFlag}: {dbUpdateOwnersFlag: boolean, setDbUpdateOwnersFlag: Dispatch<SetStateAction<boolean>>}
+) {
 
-    let owners = JSON.parse(localStorage.getItem(OWNERS) || '')
+    function buyStreet() {
+        console.log(`улица ${cards.positions[heroesState[CurrentHeroIndex(heroesState)].position]} захвачена`)
+
+        setHeroesState(() => {
+        
+            let updateState = heroesState.map((hero, i) => {
+                if (i === CurrentHeroIndex(heroesState)) {
+                    return {...hero, ownerOf: [...hero.ownerOf, cards.positions[heroesState[CurrentHeroIndex(heroesState)].position]]}
+                } else return hero
+            })
+
+            setNextCurrentHeroFlag(true)
+
+            return updateState 
+        })
+
+        setOwnersState(() => {
+
+            let updateState = ownersState.map(fullStreet => {
+                return Object.fromEntries(Object.entries(fullStreet).map(street => {
+                    if (Number(street[0]) === heroesState[CurrentHeroIndex(heroesState)].position) {
+                        return [street[0], heroesState[CurrentHeroIndex(heroesState)].name]
+                    }  else {
+                        return street
+                    }    
+                }))
+            })
+
+            setDbUpdateOwnersFlag(true)
+
+            return updateState
+        })
+
+        // 1. добавляем в стейт ГГ новую улицу +
+        // 1.1 добавляем в стейт овнерс нового владельца +
+        // 2. меняем ГГ +
+        // 3. обновляем БД героев +
+        // 3.1 обновляем БД овнерс +
+        // 4. Запускам курс опций +
+    }
+
+    
+
+    function skipStreet () {
+
+    }
 
     setFirstMainButton({
         click: () => {
-            console.log(`улица захвачена ${owners[currentHero.position]}`)
-            if (!currentHero.ownerOf.includes(currentHero.position.toString())) {
-                currentHero.ownerOf.push(currentHero.position.toString())
-            }
-
-            owners = {...owners, [currentHero.position]: currentHero.name}
-
-            localStorage.setItem(currentHero.name, JSON.stringify(currentHero))
-            localStorage.setItem(OWNERS, JSON.stringify(owners))
-            NextCurrentHero()
+            buyStreet()
         },
         nameButton: 'Захватить улицу'
     })
     setSecondMainButton({
         click: () => {
-            console.log(`улица НЕ захвачена ${currentHero.name}`)
+            skipStreet()
+            console.log(`улица НЕ захвачена ${heroesState[CurrentHeroIndex(heroesState)].name}`)
         },
         nameButton: 'Уступить улицу'
     })

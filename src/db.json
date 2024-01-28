@@ -1,36 +1,38 @@
 {
   "players": [
     {
-      "id": "rw",
-      "isCurrentHero": true,
-      "name": "Ron Weasley",
-      "position": 9,
-      "color": "#dc8b18",
-      "side": true,
-      "budget": 1500,
-      "ownerOf": [],
-      "inPrison": false,
-      "rollDice": true
-    },
-    {
       "id": "pp",
       "isCurrentHero": false,
       "name": "Peter Pettigrew",
-      "position": 0,
+      "position": 9,
       "color": "#164310",
       "side": false,
+      "budget": 1500,
+      "ownerOf": [
+        "Ollivander wands"
+      ],
+      "inPrison": false,
+      "rollDice": false
+    },
+    {
+      "id": "rw",
+      "isCurrentHero": true,
+      "name": "Ron Weasley",
+      "position": 0,
+      "color": "#dc8b18",
+      "side": true,
       "budget": 1500,
       "ownerOf": [],
       "inPrison": false,
       "rollDice": false
     },
     {
-      "id": "hg",
+      "id": "lm",
       "isCurrentHero": false,
-      "name": "Hermione Granger",
+      "name": "Lucius Malfoy",
       "position": 0,
-      "color": "#e9ec12",
-      "side": true,
+      "color": "#35124c",
+      "side": false,
       "budget": 1500,
       "ownerOf": [],
       "inPrison": false,
@@ -45,17 +47,17 @@
       "brownLineOwner": "none"
     },
     {
+      "31": "none",
+      "32": "none",
+      "34": "none",
+      "id": "greenLine",
+      "greenLineOwner": "none"
+    },
+    {
       "37": "none",
       "39": "none",
       "id": "darkblueLine",
       "darkblueLineOwner": "none"
-    },
-    {
-      "6": "none",
-      "8": "none",
-      "9": "none",
-      "id": "blueLine",
-      "blueLineOwner": "none"
     },
     {
       "id": "allies",
@@ -72,6 +74,13 @@
       "Resurrection Stone": "none",
       "Elder Wand": "none",
       "deathlyHallowsOwner": "none"
+    },
+    {
+      "6": "none",
+      "8": "none",
+      "9": "Peter Pettigrew",
+      "id": "blueLine",
+      "blueLineOwner": "none"
     },
     {
       "11": "none",
@@ -100,13 +109,6 @@
       "29": "none",
       "id": "yellowLine",
       "yellowLineOwner": "none"
-    },
-    {
-      "31": "none",
-      "32": "none",
-      "34": "none",
-      "id": "greenLine",
-      "greenLineOwner": "none"
     }
   ]
 }

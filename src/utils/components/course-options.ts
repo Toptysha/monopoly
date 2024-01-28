@@ -12,20 +12,57 @@ export function CourseOptions(
     {firstMainButton, setFirstMainButton}: {firstMainButton: MainButton, setFirstMainButton: Dispatch<SetStateAction<MainButton>>},
     {secondMainButton, setSecondMainButton}: {secondMainButton: MainButton, setSecondMainButton: Dispatch<SetStateAction<MainButton>>},
     {dices, setDices}: {dices: number[], setDices: Dispatch<SetStateAction<number[]>>},
-    {dbFieldFlag, setDbFieldFlag}: {dbFieldFlag: boolean, setDbFieldFlag: Dispatch<SetStateAction<boolean>>},
-    {dbPositionUpdateFlag, setDbPositionUpdateFlag}: {dbPositionUpdateFlag: boolean, setDbPositionUpdateFlag: Dispatch<SetStateAction<boolean>>},
-    {dbUpdateCurrentHeroFlag, setDbUpdateCurrentHeroFlag}: {dbUpdateCurrentHeroFlag: boolean, setDbUpdateCurrentHeroFlag: Dispatch<SetStateAction<boolean>>}
+    {dbUpdatePositionFlag, setDbUpdatePositionFlag}: {dbUpdatePositionFlag: boolean, setDbUpdatePositionFlag: Dispatch<SetStateAction<boolean>>},
+    {dbUpdateHerosFlag, setDbUpdateHerosFlag}: {dbUpdateHerosFlag: boolean, setDbUpdateHerosFlag: Dispatch<SetStateAction<boolean>>},
+    {courseOptionsFlag, setCourseOptionsFlag}: {courseOptionsFlag: boolean, setCourseOptionsFlag: Dispatch<SetStateAction<boolean>>},
+    {nextCurrentHeroFlag, setNextCurrentHeroFlag}: {nextCurrentHeroFlag: boolean, setNextCurrentHeroFlag: Dispatch<SetStateAction<boolean>>},
+    {dbUpdateOwnersFlag, setDbUpdateOwnersFlag}: {dbUpdateOwnersFlag: boolean, setDbUpdateOwnersFlag: Dispatch<SetStateAction<boolean>>}
 ) {
-
-    // let CurrentHeroIndex(heroesState): number = CurrentHeroIndex(heroesState)(heroesState)
 
     if (elementIds.streets.includes(heroesState[CurrentHeroIndex(heroesState)]?.position)) {  // если персонаж попал на одну из улиц
         console.log('street')
-        console.log(heroesState)
 
-        // let owners = JSON.parse(localStorage.getItem(OWNERS) || '')
+        let currentElement: any
 
-        // if (owners[heroesState[CurrentHeroIndex(heroesState)].position] === 'none') { // если улица никому не принадлежит
+        ownersState.forEach(elem => {
+            Object.entries(elem).forEach(e => {
+                if (Number(e[0]) === heroesState[CurrentHeroIndex(heroesState)].position) {
+                    currentElement = e[1]
+                }    
+            })
+        })
+
+        console.log(ownersState)
+
+        if (currentElement === 'none' && heroesState[CurrentHeroIndex(heroesState)].rollDice) { // герой пришел на улицу и она никому не принадлежит
+            console.log('1 Point')
+            ButtonTakeOverTheStreet(
+                {heroesState, setHeroesState}, 
+                {ownersState, setOwnersState},
+                {firstMainButton, setFirstMainButton}, 
+                {secondMainButton, setSecondMainButton}, 
+                {dbUpdateHerosFlag, setDbUpdateHerosFlag},
+                {nextCurrentHeroFlag, setNextCurrentHeroFlag},
+                {courseOptionsFlag, setCourseOptionsFlag},
+                {dbUpdateOwnersFlag, setDbUpdateOwnersFlag}
+            )
+        } else if (currentElement === heroesState[CurrentHeroIndex(heroesState)].name && heroesState[CurrentHeroIndex(heroesState)].rollDice) { // герой пришел на свою улицу
+            console.log(`${heroesState[CurrentHeroIndex(heroesState)].name} на подконтрольной улице`)
+        } else if (currentElement !== heroesState[CurrentHeroIndex(heroesState)].name && heroesState[CurrentHeroIndex(heroesState)].rollDice){  // герой пришел на чужую улицу
+            console.log(`${heroesState[CurrentHeroIndex(heroesState)].name} на улице, которую контролирует ${currentElement}`)
+        }else if (!heroesState[CurrentHeroIndex(heroesState)].rollDice) { // герой стоит на улице и готовится бросить кубики
+            ButtonRollDices(
+                {heroesState, setHeroesState}, 
+                {firstMainButton, setFirstMainButton}, 
+                {secondMainButton, setSecondMainButton}, 
+                {dices, setDices}, 
+                {dbUpdatePositionFlag, setDbUpdatePositionFlag}
+            )
+        }
+
+        // if (ownersState[heroesState[CurrentHeroIndex(heroesState)].position] === 'none') { // если улица никому не принадлежит
+        
+        // }
         //     ButtonTakeOverTheStreet(heroesState[CurrentHeroIndex(heroesState)], {firstMainButton, setFirstMainButton, secondMainButton, setSecondMainButton})
         // } else {
         //     ButtonCapturedStreet(heroesState[CurrentHeroIndex(heroesState)], {firstMainButton, setFirstMainButton, secondMainButton, setSecondMainButton, dices, setDices})
@@ -74,9 +111,7 @@ export function CourseOptions(
             {firstMainButton, setFirstMainButton}, 
             {secondMainButton, setSecondMainButton}, 
             {dices, setDices}, 
-            {dbFieldFlag, setDbFieldFlag},
-            {dbPositionUpdateFlag, setDbPositionUpdateFlag},
-            {dbUpdateCurrentHeroFlag, setDbUpdateCurrentHeroFlag}
+            {dbUpdatePositionFlag, setDbUpdatePositionFlag}
         )
 
     } else if (elementIds.prison === heroesState[CurrentHeroIndex(heroesState)]?.position) {

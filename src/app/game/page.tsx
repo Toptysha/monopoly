@@ -11,7 +11,9 @@ import MiddleSquareBlock from '@/utils/components/middle-square-block';
 import ChipPlayerUpdate from '@/utils/components/gaming-chips/chip-player-update';
 import DbUpdateHeroPosition from '@/utils/db-actions/db-update-hero-position';
 import DbInitHeroesAndOwnersState from '@/utils/db-actions/db-init-heroes-and-owners-state';
-import DbUpdateCurrentHero from '@/utils/db-actions/db-update-current-hero';
+import NextCurrentHero from '@/utils/components/next-current-hero';
+import DbUpdateAllHeros from '@/utils/db-actions/db-update-all-heros';
+import DbUpdateOwners from '@/utils/db-actions/db-update-owners';
 
 
 
@@ -25,48 +27,79 @@ function PlayingField() {
     const [firstMainButton, setFirstMainButton] = useState<MainButton>({click: () => {}, nameButton: ''})
     const [secondMainButton, setSecondMainButton] = useState<MainButton>({click: () => {}, nameButton: ''})
 
-    const [dbFieldFlag, setDbFieldFlag] = useState(false)
-    const [dbPositionUpdateFlag, setDbPositionUpdateFlag] = useState(false)
-    const [dbUpdateCurrentHeroFlag, setDbUpdateCurrentHeroFlag] = useState(false)
+    const [dbUpdatePositionFlag, setDbUpdatePositionFlag] = useState(false)
+    const [dbUpdateHerosFlag, setDbUpdateHerosFlag] = useState(false)
+    const [courseOptionsFlag, setCourseOptionsFlag] = useState(false)
+    const [nextCurrentHeroFlag, setNextCurrentHeroFlag] = useState(false)
+    const [dbUpdateOwnersFlag, setDbUpdateOwnersFlag] = useState(false)
 
     useEffect(() => {
-        DbInitHeroesAndOwnersState(setHeroesState, setOwnersState, setDbFieldFlag)
+        DbInitHeroesAndOwnersState(setHeroesState, setOwnersState, setDbUpdatePositionFlag)
     }, [])
 
+    // useEffect(() => {
+    //     console.log(dices)
+    // })
+
     useEffect(() => {
-        
-        if (dbFieldFlag) {
-            DbUpdateHeroPosition(dices, {heroesState, setHeroesState}, setDbUpdateCurrentHeroFlag)
-            ChipPlayerUpdate(heroesState)
-            setDbFieldFlag(false)
-            // console.log(ownersState)
-            // console.log(heroesState) 
+        ChipPlayerUpdate(heroesState)
+    }, [heroesState])
+
+    useEffect(() => {    
+        if (dbUpdatePositionFlag) {
+            DbUpdateHeroPosition({dices, setDices}, {heroesState, setHeroesState}, setDbUpdateHerosFlag)
+            setCourseOptionsFlag(true)
+            setDbUpdatePositionFlag(false)
         }
-    }, [dbFieldFlag])
+    }, [dbUpdatePositionFlag])
 
 
 
-    useEffect(() => {
-        if (dbUpdateCurrentHeroFlag) {
-            DbUpdateCurrentHero(heroesState, dbPositionUpdateFlag, setDbPositionUpdateFlag)
-            setDbUpdateCurrentHeroFlag(false)
-            // console.log(heroesState)
+    useEffect(() => { // запись нового heroesState в БД
+        if (dbUpdateHerosFlag) {
+            DbUpdateAllHeros(heroesState)
+            setDbUpdateHerosFlag(false)
         }    
-    }, [dbUpdateCurrentHeroFlag])
+    }, [dbUpdateHerosFlag])
+
+    useEffect(() => { // запись нового владельца в БД
+        if (dbUpdateOwnersFlag) {
+            DbUpdateOwners(ownersState)
+            setDbUpdateOwnersFlag(false)
+        }    
+    }, [dbUpdateOwnersFlag])
 
     useEffect(() => {
         // console.log(heroesState)
-        CourseOptions(
-            {heroesState, setHeroesState}, 
-            {ownersState, setOwnersState}, 
-            {firstMainButton, setFirstMainButton}, 
-            {secondMainButton, setSecondMainButton}, 
-            {dices, setDices},
-            {dbFieldFlag, setDbFieldFlag},
-            {dbPositionUpdateFlag, setDbPositionUpdateFlag},
-            {dbUpdateCurrentHeroFlag, setDbUpdateCurrentHeroFlag}
-        )
-    }, [heroesState])
+        if (courseOptionsFlag) {
+            CourseOptions(
+                {heroesState, setHeroesState}, 
+                {ownersState, setOwnersState}, 
+                {firstMainButton, setFirstMainButton}, 
+                {secondMainButton, setSecondMainButton}, 
+                {dices, setDices},
+                {dbUpdatePositionFlag, setDbUpdatePositionFlag},
+                // {dbPositionUpdateFlag, setDbPositionUpdateFlag},
+                {dbUpdateHerosFlag, setDbUpdateHerosFlag},
+                {courseOptionsFlag, setCourseOptionsFlag},
+                {nextCurrentHeroFlag, setNextCurrentHeroFlag},
+                {dbUpdateOwnersFlag, setDbUpdateOwnersFlag}
+            )
+            setCourseOptionsFlag(false)
+        }    
+    }, [courseOptionsFlag])
+
+    useEffect(() => {
+        if (nextCurrentHeroFlag) {
+            NextCurrentHero(
+                {heroesState, setHeroesState}, 
+                {dbUpdatePositionFlag, setDbUpdatePositionFlag}, 
+                {dbUpdateHerosFlag, setDbUpdateHerosFlag},
+                {courseOptionsFlag, setCourseOptionsFlag}
+            )
+            setNextCurrentHeroFlag(false)
+        }    
+    }, [nextCurrentHeroFlag])
 
     return (
       <div className={styles.playingField}>

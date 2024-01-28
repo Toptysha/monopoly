@@ -1,27 +1,38 @@
 import { Player } from "@/types";
 import { CurrentHeroIndex } from "./current-hero";
 import { Dispatch, SetStateAction } from "react";
-import UpdateLocalStorageCurrentHero from "../local-storage/update-localStorage-current-hero";
 
-export default function NextCurrentHero({heroesState, setHeroesState}: {heroesState: Player[], setHeroesState: Dispatch<SetStateAction<Player[]>>}) {
+export default function NextCurrentHero(
+    {heroesState, setHeroesState}: {heroesState: Player[], setHeroesState: Dispatch<SetStateAction<Player[]>>},
+    {dbUpdatePositionFlag, setDbUpdatePositionFlag}: {dbUpdatePositionFlag: boolean, setDbUpdatePositionFlag: Dispatch<SetStateAction<boolean>>},
+    {dbUpdateHerosFlag, setDbUpdateHerosFlag}: {dbUpdateHerosFlag: boolean, setDbUpdateHerosFlag: Dispatch<SetStateAction<boolean>>},
+    {courseOptionsFlag, setCourseOptionsFlag}: {courseOptionsFlag: boolean, setCourseOptionsFlag: Dispatch<SetStateAction<boolean>>},
+    heroInQueue = 0 // героев в очереди
+) {
 
-    let nextCurrentHeroIndex = CurrentHeroIndex(heroesState) + 1
+    if (heroInQueue === 0) {
 
-    if (nextCurrentHeroIndex === heroesState.length) {
-        nextCurrentHeroIndex = 0
-    }
-
-    setHeroesState((prev: any) => 
-            prev.map((hero: any) => {
-                if (hero === heroesState[CurrentHeroIndex(heroesState)]) {
-                    hero = {...hero, isCurrentHero: false}
-                } else if (hero === heroesState[nextCurrentHeroIndex]) {
-                    hero = {...hero, isCurrentHero: true}
-                }
-            })
-        )
-
-    UpdateLocalStorageCurrentHero(heroesState)
-    localStorage.setItem(heroesState[nextCurrentHeroIndex].name, JSON.stringify(heroesState[nextCurrentHeroIndex]))
+        let nextCurrentHeroIndex = CurrentHeroIndex(heroesState) + 1
+        if (nextCurrentHeroIndex === heroesState.length) {
+            nextCurrentHeroIndex = 0
+        }
     
+        setHeroesState(() => {
+        
+            let updateState = heroesState.map((hero, i) => {
+                if (i === CurrentHeroIndex(heroesState)) {
+                    return {...hero, rollDice: false, isCurrentHero: false}
+                } else if (i === nextCurrentHeroIndex) {
+                    return {...hero, isCurrentHero: true}
+                } else return hero
+            })
+    
+            setDbUpdateHerosFlag(true)
+            setCourseOptionsFlag(true)
+            return updateState 
+        })
+
+    } else {
+        // функция для передачи очереди по кругу (на аукционе)
+    }   
 }
